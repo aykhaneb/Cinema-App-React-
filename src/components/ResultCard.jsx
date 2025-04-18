@@ -1,8 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { GlobalContext } from "../context/GlobalState";
 
 const ResultCard = ({ movie }) => {
-  const { addToMovieWatchlist  } = useContext(GlobalContext);
+  const { watchlist, addToMovieWatchlist } = useContext(GlobalContext);
+  const [showMessage, setShowMessage] = useState(false);
+
+  const isMovieInWatchlist = watchlist.some((m) => m.id === movie.id);
 
   const formattedReleaseDate = movie.release_date
     ? new Date(movie.release_date).toLocaleDateString("en-US", {
@@ -13,6 +16,17 @@ const ResultCard = ({ movie }) => {
     : "-";
 
   const roundedRating = Math.ceil(movie.vote_average * 10) / 10;
+
+  const handleAdd = () => {
+    if (!isMovieInWatchlist) {
+      addToMovieWatchlist(movie);
+      setShowMessage(true);
+
+      setTimeout(() => {
+        setShowMessage(false);
+      }, 2000);
+    }
+  };
 
   return (
     <div className="card_item">
@@ -31,7 +45,19 @@ const ResultCard = ({ movie }) => {
       </div>
 
       <div className="controls">
-        <button className="btn" onClick={() => addToMovieWatchlist(movie)}>Add To Watchlist</button>
+        <button
+          className="btn"
+          onClick={handleAdd}
+          disabled={isMovieInWatchlist}
+        >
+          {isMovieInWatchlist ? "Already Added" : "Add To Watchlist"}
+        </button>
+
+        {showMessage && (
+          <div style={{ color: "green", marginTop: "5px" }}>
+            ✅ Added successfully!
+          </div>
+        )}
       </div>
     </div>
   );

@@ -1,9 +1,7 @@
 import React, { useContext } from "react";
 import { GlobalContext } from "../context/GlobalState";
 import MovieCard from "./MovieCard";
-
-// div
-
+ 
 const Watchlist = () => {
   const { watchlist } = useContext(GlobalContext);
 

@@ -17,8 +17,13 @@ export const GlobalProvider = (props) => {
     localStorage.setItem("watchlist", JSON.stringify(state.watchlist));
   }, [state.watchlist]);
 
+  // ACTIONS
   const addToMovieWatchlist = (movie) => {
     dispatch({ type: "ADD_MOVIE_TO_WATCHLIST", payload: movie });
+  };
+
+  const removeMovieFromWatchlist = (id) => {
+    dispatch({ type: "REMOVE_MOVIE_FROM_WATCHLIST", payload: id });
   };
 
   return (
@@ -26,6 +31,7 @@ export const GlobalProvider = (props) => {
       value={{
         watchlist: state.watchlist,
         addToMovieWatchlist,
+        removeMovieFromWatchlist, 
       }}
     >
       {props.children}

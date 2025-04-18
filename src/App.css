@@ -84,6 +84,16 @@ header .inner-content {
   padding: 10px 0;
 }
 
+.success-message {
+  animation: fadeOut 2s forwards;
+}
+
+@keyframes fadeOut {
+  0% { opacity: 1; }
+  80% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
 header a {
   color: var(--white);
   font-size: 1.25rem;
